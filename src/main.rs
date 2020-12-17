@@ -20,8 +20,3 @@ fn rgb(freq: f64, i: f64) -> (u8, u8, u8) {
     
     (red as u8, green as u8, blue as u8)
 }
-
-
-// red   = Math.sin(freq*i + 0) * 127 + 128
-// green = Math.sin(freq*i + 2*Math::PI/3) * 127 + 128
-// blue  = Math.sin(freq*i + 4*Math::PI/3) * 127 + 128
