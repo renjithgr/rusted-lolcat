@@ -1,5 +1,6 @@
 ## Build and Run
 
 ```bash
-cargo run < test-input.txt
+cargo build --release
+./target/release/rusted-lolcat test-input.txt
 ```
