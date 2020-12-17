@@ -1,3 +1,9 @@
-A BufRead is a type of Reader which has an internal buffer, allowing it to perform extra ways of reading.
-For example, reading line-by-line is inefficient without using a buffer, so if you want to read by line, 
-you'll need BufRead, which includes a read_line method as well as a lines iterator.
+Rust is blazingly fast and memory-efficient: with no runtime or garbage collector, it can power performance-critical services, 
+run on embedded devices, and easily integrate with other languages. 
+Rust’s rich type system and ownership model guarantee memory-safety and thread-safety — enabling you to eliminate 
+many classes of bugs at compile-time. Rust has great documentation, a friendly compiler with useful error messages,
+and top-notch tooling — an integrated package manager and build tool, smart multi-editor support with auto-completion 
+and type inspections, an auto-formatter, and more.
+Hundreds of companies around the world are using Rust in production today for fast, low-resource, cross-platform solutions. 
+Software you know and love, like Firefox, Dropbox, and Cloudflare, uses Rust. From startups to large corporations, from embedded 
+devices to scalable web services, Rust is a great fit.
