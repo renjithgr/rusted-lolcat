@@ -1,12 +1,14 @@
 use std::io;
-use std::io::BufRead;
+use std::io::prelude::*;
 
 fn main() {
-    let input = read_line_iter();
-    
-    for c in input.chars() {
-        let (r, g, b) = rgb(c as i16);
-        print!("\x1b[38;2;{};{};{}m{}\x1b[0m", r, g, b, c);
+    let stdin = io::stdin();
+    for line in stdin.lock().lines() {
+        for c in line.unwrap().chars() {
+            let (r, g, b) = rgb(c as i16);
+            print!("\x1b[38;2;{};{};{}m{}\x1b[0m", r, g, b, c);
+        }
+        println!();
     }
 }
 
@@ -19,15 +21,4 @@ fn rgb(c: i16) -> (u8, u8, u8) {
     let b = (freq * i + 4.0).sin() * 127.0 + 128.0;
     
     (r as u8, g as u8, b as u8)
-}
-
-fn read_line_iter() -> String {
-    let stdin = io::stdin();
-
-    let input = stdin.lock().lines().next();
-
-    input.expect("No lines in the buffer")
-        .expect("Failed to read line")
-        .trim()
-        .to_string()
 }

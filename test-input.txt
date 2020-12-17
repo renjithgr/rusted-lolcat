@@ -1,1 +1,3 @@
-abcdefghijklmnopqrstuvw
+A BufRead is a type of Reader which has an internal buffer, allowing it to perform extra ways of reading.
+For example, reading line-by-line is inefficient without using a buffer, so if you want to read by line, 
+you'll need BufRead, which includes a read_line method as well as a lines iterator.
