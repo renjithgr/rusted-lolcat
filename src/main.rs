@@ -6,17 +6,18 @@ use std::f64::consts::PI;
 
 fn main() {
 
-    let filename = match std::env::args().nth(1) {
-        Some(n) =>  n,
-        None => String::from("")
-    };
-
-    if filename == "" {
+    if std::env::args().len() == 1 {
         process_standard_input();
-    } else if process_file(&filename).is_err() {
-        println!("Error opening file {}", filename);
-    }
-        
+    } else {
+        let args: Vec<String> = std::env::args().collect();
+        let mut iter = args.iter();
+        iter.next();
+        while let Some(filename) = iter.next() {
+            if process_file(filename).is_err() {
+                println!("Error opening file {}", filename);
+            }
+        }
+    }   
 }
 
 fn process_file(filename: &str)-> Result<(), io::Error>{
