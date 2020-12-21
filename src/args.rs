@@ -1,4 +1,3 @@
-
 pub struct Params {
     pub filenames: Vec<String>,
     pub frequency: f64,
@@ -28,3 +27,32 @@ pub fn process_params(input: Vec<String>) -> Params {
         spread: spread
     };
 }
+
+
+macro_rules! vec_of_strings {
+    ($($x:expr),*) => (vec![$($x.to_string()),*]);
+}
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_should_parse_filenames() {
+        let input: Vec<String> = vec_of_strings!["", "filename-1.txt", "filename-2.html"];
+        let params = process_params(input);
+        assert_eq!(params.filenames.len(), 2);
+        assert_eq!(params.filenames[0], "filename-1.txt");
+        assert_eq!(params.filenames[1], "filename-2.html");
+    }
+
+    #[test]
+    fn test_should_parse_frequency_parameter() {
+        let input: Vec<String> = vec_of_strings!["", "-f", "2.0", "filename-1.txt"];
+        let params = process_params(input);
+        assert_eq!(params.filenames.len(), 1);
+        assert_eq!(params.frequency, 2.0);
+    }
+}
+
