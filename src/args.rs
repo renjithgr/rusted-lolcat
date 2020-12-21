@@ -15,7 +15,7 @@ pub fn process_params(input: Vec<String>) -> Params {
         if param == "-F" || param == "--freq" {
             match iter.next() {
                 Some(n) => frequency = n.parse::<f64>().unwrap(),
-                None => panic!("Invalid frequence value")
+                None => panic!("Invalid frequency value")
             }
         } else {
             filenames.push(param.to_string());
