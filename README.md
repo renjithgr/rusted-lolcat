@@ -1,3 +1,5 @@
+![Rust](https://github.com/devmode-io/rusted-lolcat/workflows/Build/badge.svg)
+
 ## Build and Run
 
 ```bash
