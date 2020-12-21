@@ -12,6 +12,10 @@ fn main() {
     } else {
         let args: Vec<String> = std::env::args().collect();
         let params = args::process_params(args);
+
+        if params.help == true {
+            print_help_and_exit();
+        }
         
         for filename in params.filenames.iter() {
             if process_file(filename, params.frequency, params.spread).is_err() {
@@ -19,6 +23,15 @@ fn main() {
             }
         }
     }   
+}
+
+fn print_help_and_exit() {
+    let help = "usage: rusted-lolcat [option ...] [file ...]
+    --spread, -s: Rainbow spread (default: 3.0) 
+      --freq, -f: Rainbow frequency (default: 0.1)
+      --help, -h: Show this message";
+    println!("{}", help);
+    std::process::exit(0);
 }
 
 fn process_file(filename: &str, frequency: f64, spread: f64)-> Result<(), io::Error>{

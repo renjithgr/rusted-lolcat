@@ -1,13 +1,15 @@
 pub struct Params {
     pub filenames: Vec<String>,
     pub frequency: f64,
-    pub spread: f64
+    pub spread: f64,
+    pub help: bool
 }
 
 pub fn process_params(input: Vec<String>) -> Params {
     let mut frequency = 0.1;    
     let mut spread = 3.0;
     let mut filenames = vec![];
+    let mut help = false;
 
     let mut iter = input.iter();
     iter.next();
@@ -22,6 +24,8 @@ pub fn process_params(input: Vec<String>) -> Params {
                 Some(n) => spread = n.parse::<f64>().unwrap(),
                 None => panic!("Invalid spread value")
             }
+        } else if param == "-h" || param == "--help" {
+            help = true;
         } else {
             filenames.push(param.to_string());
         }
@@ -29,7 +33,8 @@ pub fn process_params(input: Vec<String>) -> Params {
     return Params {
         filenames: filenames,
         frequency: frequency,
-        spread: spread
+        spread: spread,
+        help: help
     };
 }
 
@@ -38,7 +43,7 @@ mod tests {
     macro_rules! vec_of_strings {
         ($($x:expr),*) => (vec![$($x.to_string()),*]);
     }
-    
+
     // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
 
@@ -81,6 +86,20 @@ mod tests {
         let params = process_params(input);
         assert_eq!(params.filenames.len(), 1);
         assert_eq!(params.spread, 2.0);
+    }
+
+    #[test]
+    fn test_should_parse_help_flag_short_version() {
+        let input: Vec<String> = vec_of_strings!["", "-h", "filename-1.txt"];
+        let params = process_params(input);
+        assert_eq!(params.help, true);
+    }
+
+    #[test]
+    fn test_should_parse_help_flag_long_version() {
+        let input: Vec<String> = vec_of_strings!["", "--help", "filename-1.txt"];
+        let params = process_params(input);
+        assert_eq!(params.help, true);
     }
 }
 
