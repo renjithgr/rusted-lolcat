@@ -1,6 +1,6 @@
 ![Build](https://github.com/devmode-io/rusted-lolcat/workflows/Build/badge.svg)
 
-## Build and Run
+## Development
 
 ```bash
 cargo build --release
