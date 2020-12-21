@@ -12,7 +12,7 @@ pub fn process_params(input: Vec<String>) -> Params {
     let mut iter = input.iter();
     iter.next();
     while let Some(param) = iter.next() {
-        if param == "-f" {
+        if param == "-F" || param == "--freq" {
             match iter.next() {
                 Some(n) => frequency = n.parse::<f64>().unwrap(),
                 None => panic!("Invalid frequence value")
@@ -48,8 +48,16 @@ mod tests {
     }
 
     #[test]
-    fn test_should_parse_frequency_parameter() {
-        let input: Vec<String> = vec_of_strings!["", "-f", "2.0", "filename-1.txt"];
+    fn test_should_parse_frequency_parameter_short_param_name() {
+        let input: Vec<String> = vec_of_strings!["", "-F", "2.0", "filename-1.txt"];
+        let params = process_params(input);
+        assert_eq!(params.filenames.len(), 1);
+        assert_eq!(params.frequency, 2.0);
+    }
+
+    #[test]
+    fn test_should_parse_frequency_parameter_long_param_name() {
+        let input: Vec<String> = vec_of_strings!["", "--freq", "2.0", "filename-1.txt"];
         let params = process_params(input);
         assert_eq!(params.filenames.len(), 1);
         assert_eq!(params.frequency, 2.0);
