@@ -3,40 +3,7 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::io::BufReader;
 use std::f64::consts::PI;
-
-
-mod cli {
-    pub struct Params {
-        pub filenames: Vec<String>,
-        pub frequency: f64,
-        pub spread: f64
-    }
-
-    pub fn process_params(input: Vec<String>) -> Params {
-        let mut frequency = 0.1;    
-        let spread = 3.0;
-        let mut filenames = vec![];
-
-        let mut iter = input.iter();
-        iter.next();
-        while let Some(param) = iter.next() {
-            if param == "-f" {
-                match iter.next() {
-                    Some(n) => frequency = n.parse::<f64>().unwrap(),
-                    None => panic!("Invalid frequence value")
-                }
-            } else {
-                filenames.push(param.to_string());
-            }
-        }
-        return Params {
-            filenames: filenames,
-            frequency: frequency,
-            spread: spread
-        };
-    }
-}
-
+mod args;
 
 fn main() {
 
@@ -44,7 +11,7 @@ fn main() {
         process_standard_input();
     } else {
         let args: Vec<String> = std::env::args().collect();
-        let params = cli::process_params(args);
+        let params = args::process_params(args);
         
         for filename in params.filenames.iter() {
             if process_file(filename, params.frequency, params.spread).is_err() {
