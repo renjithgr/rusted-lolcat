@@ -33,13 +33,12 @@ pub fn process_params(input: Vec<String>) -> Params {
     };
 }
 
-
-macro_rules! vec_of_strings {
-    ($($x:expr),*) => (vec![$($x.to_string()),*]);
-}
-
 #[cfg(test)]
 mod tests {
+    macro_rules! vec_of_strings {
+        ($($x:expr),*) => (vec![$($x.to_string()),*]);
+    }
+    
     // Note this useful idiom: importing names from outer (for mod tests) scope.
     use super::*;
 
