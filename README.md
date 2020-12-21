@@ -4,6 +4,7 @@
 
 Rust implementation of https://github.com/busyloop/lolcat.
 
+![Screen shot of Lolcat](/images/screen-shot.png?raw=true "Screen shot of Lolcat")
 
 ## Development
 
