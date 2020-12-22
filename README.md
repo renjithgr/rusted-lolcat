@@ -23,3 +23,8 @@ cargo test
 ```bash
 cargo run -- test-input-1.txt test-input-2.txt
 ```
+or
+
+```bash
+cat /dev/urandom | hexdump -C | target/release/rusted-lolcat
+```
