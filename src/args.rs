@@ -1,3 +1,10 @@
+const FREQUENCY_FLAG_SHORT: &str = "-f";
+const FREQUENCY_FLAG_LONG:  &str = "--freq";
+const SPREAD_FLAG_SHORT:    &str = "-s";
+const SPREAD_FLAG_LONG:     &str = "--spread";
+const HELP_FLAG_SHORT:      &str = "-h";
+const HELP_FLAG_LONG:       &str = "--help";
+
 pub struct Params {
     pub filenames: Vec<String>,
     pub frequency: f64,
@@ -14,22 +21,26 @@ pub fn process_params(input: Vec<String>) -> Params {
     let mut iter = input.iter();
     iter.next();
     while let Some(param) = iter.next() {
-        if param == "-f" || param == "--freq" {
-            match iter.next() {
-                Some(n) => frequency = n.parse::<f64>().unwrap(),
-                None => panic!("Invalid frequency value")
-            }
-        } else if param == "-s" || param == "--spread" {
-            match iter.next() {
-                Some(n) => spread = n.parse::<f64>().unwrap(),
-                None => panic!("Invalid spread value")
-            }
-        } else if param == "-h" || param == "--help" {
-            help = true;
-        } else {
-            filenames.push(param.to_string());
+        match param.as_str() {
+            
+           FREQUENCY_FLAG_SHORT | FREQUENCY_FLAG_LONG =>
+                match iter.next() {
+                    Some(n) => frequency = n.parse::<f64>().unwrap(),
+                    None => panic!("Invalid frequency value")
+                },
+
+            SPREAD_FLAG_SHORT | SPREAD_FLAG_LONG =>
+                match iter.next() {
+                    Some(n) => spread = n.parse::<f64>().unwrap(),
+                    None => panic!("Invalid spread value")
+                },
+
+            HELP_FLAG_SHORT | HELP_FLAG_LONG => help = true,
+
+            _ => filenames.push(param.to_string())
         }
     }
+
     return Params {
         filenames: filenames,
         frequency: frequency,
