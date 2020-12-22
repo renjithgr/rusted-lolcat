@@ -1,3 +1,4 @@
+use args::process_params;
 use args::Params;
 use std::f64::consts::PI;
 use std::fs::File;
@@ -7,7 +8,7 @@ use std::io::BufReader;
 mod args;
 
 fn main() {
-    let params = args::process_params(std::env::args().collect());
+    let params = process_params(std::env::args().collect());
 
     if params.help {
         print_help_and_exit();
