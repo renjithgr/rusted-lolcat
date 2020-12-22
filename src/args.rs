@@ -1,49 +1,51 @@
 const FREQUENCY_FLAG_SHORT: &str = "-f";
-const FREQUENCY_FLAG_LONG:  &str = "--freq";
-const SPREAD_FLAG_SHORT:    &str = "-s";
-const SPREAD_FLAG_LONG:     &str = "--spread";
-const HELP_FLAG_SHORT:      &str = "-h";
-const HELP_FLAG_LONG:       &str = "--help";
+const FREQUENCY_FLAG_LONG: &str = "--freq";
+const SPREAD_FLAG_SHORT: &str = "-s";
+const SPREAD_FLAG_LONG: &str = "--spread";
+const HELP_FLAG_SHORT: &str = "-h";
+const HELP_FLAG_LONG: &str = "--help";
 
 pub struct Params {
     pub filenames: Vec<String>,
     pub frequency: f64,
     pub spread: f64,
-    pub help: bool
+    pub help: bool,
 }
 
 pub fn process_params(input: Vec<String>) -> Params {
-    let mut frequency = 0.1;    
+    let mut frequency = 0.1;
     let mut spread = 3.0;
     let mut filenames = vec![];
     let mut help = false;
-    
+
     if input.len() > 1 {
         let mut iter = input.iter();
         iter.next();
         while let Some(param) = iter.next() {
             match param.as_str() {
-                
-            FREQUENCY_FLAG_SHORT | FREQUENCY_FLAG_LONG =>
-                    match iter.next() {
-                        Some(n) => frequency = n.parse::<f64>().unwrap(),
-                        None => panic!("Invalid frequency value")
-                    },
+                FREQUENCY_FLAG_SHORT | FREQUENCY_FLAG_LONG => match iter.next() {
+                    Some(n) => frequency = n.parse::<f64>().unwrap(),
+                    None => panic!("Invalid frequency value"),
+                },
 
-                SPREAD_FLAG_SHORT | SPREAD_FLAG_LONG =>
-                    match iter.next() {
-                        Some(n) => spread = n.parse::<f64>().unwrap(),
-                        None => panic!("Invalid spread value")
-                    },
+                SPREAD_FLAG_SHORT | SPREAD_FLAG_LONG => match iter.next() {
+                    Some(n) => spread = n.parse::<f64>().unwrap(),
+                    None => panic!("Invalid spread value"),
+                },
 
                 HELP_FLAG_SHORT | HELP_FLAG_LONG => help = true,
 
-                _ => filenames.push(param.to_string())
+                _ => filenames.push(param.to_string()),
             }
         }
     }
 
-    Params { filenames, frequency, spread, help }
+    Params {
+        filenames,
+        frequency,
+        spread,
+        help,
+    }
 }
 
 #[cfg(test)]
@@ -110,4 +112,3 @@ mod tests {
         assert_eq!(params.help, true);
     }
 }
-
