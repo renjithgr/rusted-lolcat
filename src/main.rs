@@ -8,7 +8,7 @@ mod args;
 fn main() {
 
     if std::env::args().len() == 1 {
-        process_standard_input();
+        process_standard_input(0.1, 3.0);
     } else {
         let args: Vec<String> = std::env::args().collect();
         let params = args::process_params(args);
@@ -37,26 +37,27 @@ fn print_help_and_exit() {
 fn process_file(filename: &str, frequency: f64, spread: f64)-> Result<(), io::Error>{
     let f = File::open(filename)?;
     let file = BufReader::new(&f);
+
     for line in file.lines() {
-        for (i, c) in line.unwrap().char_indices() {
-            let (r, g, b) = rgb(frequency, i as f64 / spread );
-            print!("\x1b[38;2;{};{};{}m{}\x1b[0m", r, g, b, c);
-        }
-        println!();
+        rainbow_println(&line.unwrap(), frequency, spread);
     }
 
     Ok(())
 }
 
-fn process_standard_input() {
+fn process_standard_input(frequency: f64, spread: f64) {
     let stdin = io::stdin();
     for line in stdin.lock().lines() {
-        for (i, c) in line.unwrap().char_indices() {
-            let (r, g, b) = rgb(0.1, i as f64);
-            print!("\x1b[38;2;{};{};{}m{}\x1b[0m", r, g, b, c);
-        }
-        println!();
+        rainbow_println(&line.unwrap(), frequency, spread);
     }
+}
+
+fn rainbow_println(line: &str, frequency: f64, spread: f64) {
+    for (i, c) in line.char_indices() {
+        let (r, g, b) = rgb(frequency, i as f64 / spread );
+        print!("\x1b[38;2;{};{};{}m{}\x1b[0m", r, g, b, c);
+    }
+    println!();
 }
 
 fn rgb(freq: f64, i: f64) -> (u8, u8, u8) {
