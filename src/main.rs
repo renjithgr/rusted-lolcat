@@ -1,3 +1,4 @@
+use args::Params;
 use std::f64::consts::PI;
 use std::fs::File;
 use std::io;
@@ -6,19 +7,14 @@ use std::io::BufReader;
 mod args;
 
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
-    let params = args::process_params(args);
+    let params = args::process_params(std::env::args().collect());
 
     if params.help {
         print_help_and_exit();
     } else if params.filenames.is_empty() {
-        process_standard_input(params.frequency, params.spread);
+        process_standard_input(params);
     } else {
-        for filename in params.filenames.iter() {
-            if process_file(filename, params.frequency, params.spread).is_err() {
-                println!("Error opening file {}", filename);
-            }
-        }
+        process_files(params);
     }
 }
 
@@ -29,6 +25,14 @@ fn print_help_and_exit() {
       --help, -h: Show this message";
     println!("{}", help);
     std::process::exit(0);
+}
+
+fn process_files(params: Params) {
+    for filename in params.filenames.iter() {
+        if process_file(filename, params.frequency, params.spread).is_err() {
+            println!("Error opening file {}", filename);
+        }
+    }
 }
 
 fn process_file(filename: &str, frequency: f64, spread: f64) -> Result<(), io::Error> {
@@ -42,10 +46,10 @@ fn process_file(filename: &str, frequency: f64, spread: f64) -> Result<(), io::E
     Ok(())
 }
 
-fn process_standard_input(frequency: f64, spread: f64) {
+fn process_standard_input(params: Params) {
     let stdin = io::stdin();
     for line in stdin.lock().lines() {
-        rainbow_println(&line.unwrap(), frequency, spread);
+        rainbow_println(&line.unwrap(), params.frequency, params.spread);
     }
 }
 
