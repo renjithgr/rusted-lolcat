@@ -7,16 +7,15 @@ mod args;
 
 fn main() {
 
-    if std::env::args().len() == 1 {
-        process_standard_input(0.1, 3.0);
-    } else {
-        let args: Vec<String> = std::env::args().collect();
-        let params = args::process_params(args);
+    let args: Vec<String> = std::env::args().collect();
+    let params = args::process_params(args);
 
-        if params.help == true {
-            print_help_and_exit();
-        }
-        
+    if params.help == true {
+        print_help_and_exit();
+    }
+    else if params.filenames.len() == 0 {
+        process_standard_input(params.frequency, params.spread);
+    } else {
         for filename in params.filenames.iter() {
             if process_file(filename, params.frequency, params.spread).is_err() {
                 println!("Error opening file {}", filename);

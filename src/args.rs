@@ -17,6 +17,15 @@ pub fn process_params(input: Vec<String>) -> Params {
     let mut spread = 3.0;
     let mut filenames = vec![];
     let mut help = false;
+    
+    if input.len() == 1 {
+        return Params {
+            filenames: filenames,
+            frequency: frequency,
+            spread: spread,
+            help: help
+        }
+    }
 
     let mut iter = input.iter();
     iter.next();
