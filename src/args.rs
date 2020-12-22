@@ -18,44 +18,32 @@ pub fn process_params(input: Vec<String>) -> Params {
     let mut filenames = vec![];
     let mut help = false;
     
-    if input.len() == 1 {
-        return Params {
-            filenames: filenames,
-            frequency: frequency,
-            spread: spread,
-            help: help
+    if input.len() > 1 {
+        let mut iter = input.iter();
+        iter.next();
+        while let Some(param) = iter.next() {
+            match param.as_str() {
+                
+            FREQUENCY_FLAG_SHORT | FREQUENCY_FLAG_LONG =>
+                    match iter.next() {
+                        Some(n) => frequency = n.parse::<f64>().unwrap(),
+                        None => panic!("Invalid frequency value")
+                    },
+
+                SPREAD_FLAG_SHORT | SPREAD_FLAG_LONG =>
+                    match iter.next() {
+                        Some(n) => spread = n.parse::<f64>().unwrap(),
+                        None => panic!("Invalid spread value")
+                    },
+
+                HELP_FLAG_SHORT | HELP_FLAG_LONG => help = true,
+
+                _ => filenames.push(param.to_string())
+            }
         }
     }
 
-    let mut iter = input.iter();
-    iter.next();
-    while let Some(param) = iter.next() {
-        match param.as_str() {
-            
-           FREQUENCY_FLAG_SHORT | FREQUENCY_FLAG_LONG =>
-                match iter.next() {
-                    Some(n) => frequency = n.parse::<f64>().unwrap(),
-                    None => panic!("Invalid frequency value")
-                },
-
-            SPREAD_FLAG_SHORT | SPREAD_FLAG_LONG =>
-                match iter.next() {
-                    Some(n) => spread = n.parse::<f64>().unwrap(),
-                    None => panic!("Invalid spread value")
-                },
-
-            HELP_FLAG_SHORT | HELP_FLAG_LONG => help = true,
-
-            _ => filenames.push(param.to_string())
-        }
-    }
-
-    return Params {
-        filenames: filenames,
-        frequency: frequency,
-        spread: spread,
-        help: help
-    };
+    Params { filenames, frequency, spread, help }
 }
 
 #[cfg(test)]

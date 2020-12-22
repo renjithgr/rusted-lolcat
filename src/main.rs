@@ -10,10 +10,10 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
     let params = args::process_params(args);
 
-    if params.help == true {
+    if params.help {
         print_help_and_exit();
     }
-    else if params.filenames.len() == 0 {
+    else if params.filenames.is_empty() {
         process_standard_input(params.frequency, params.spread);
     } else {
         for filename in params.filenames.iter() {
