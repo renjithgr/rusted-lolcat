@@ -8,7 +8,14 @@ Rust implementation of https://github.com/busyloop/lolcat.
 
 ## Development
 
+### Running tests
+
 ```bash
-cargo build --release
-./target/release/rusted-lolcat test-input-1.txt test-input-2.txt
+cargo test
+```
+
+### Running local examples
+
+```bash
+cargo run -- test-input-1.txt test-input-2.txt
 ```
