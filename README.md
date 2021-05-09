@@ -1,5 +1,7 @@
 # Rusted Lolcat
 
+
+
 ![Build](https://github.com/devmode-io/rusted-lolcat/workflows/Build/badge.svg)
 
 Rust implementation of https://github.com/busyloop/lolcat.
